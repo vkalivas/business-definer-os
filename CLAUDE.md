@@ -35,6 +35,24 @@ Never conflate the two.
 - `control/next-work.md` — current opinionated recommendation for what to work on next
 - `control/current-beliefs.md` — current best view: product thesis, MVP shape, key assumptions, unresolved tensions
 - `control/rabbit-holes.md` — interesting but non-blocking ideas that should not drive MVP decisions yet
+- `control/definition-path.md` — the ordered questions per layer with dependencies; the destination map for reaching a defined MVP
+- `control/open-questions.md` — the active question queue: which path questions are currently being worked on
+- `control/decision-log.md` — dated record of closed questions, what was decided, in what chat, producing what artifacts
+- `control/components/` — atomic knowledge base (concepts, models, claims, inventories, gaps) extracted from artifacts, structured for independent update
+
+## Layer 0: Seed Thesis
+
+Before Layer 1, there is a seed thesis — the orienting intuition that all
+subsequent layers will sharpen, test, or revise. It is not a formal layer; it
+is a starting anchor. Without it, every problem statement looks equally
+interesting and the path has no direction.
+
+The seed thesis answers three rough questions:
+- What do you currently believe exists here?
+- What shape does the opportunity feel like?
+- Why do you think you're the one to pursue it?
+
+The thesis is provisional by design. It exists to be refined, not locked.
 
 ## The 8 MVP Definition Layers
 
@@ -48,6 +66,53 @@ Never conflate the two.
 | 6 | System Shape / Core Objects | Main entities and structural components |
 | 7 | MVP Boundary | What's in, what's out, minimum coherent version |
 | 8 | Validation / Open Questions | What's assumption-based, what most needs testing |
+
+## The Definition Path
+
+Each MVP layer has a small set of core questions (typically 2-4) that need
+closing for that layer to reach MVP-Ready. The full list of questions, their
+outputs, and their dependencies lives in `control/definition-path.md`.
+
+Dependencies between questions fall into two kinds:
+- **Tight sequential**: downstream questions cannot be meaningfully answered until
+  upstream ones are closed (L1→L2→L3, and L6→L7).
+- **Co-evolving**: questions develop together rather than in strict order.
+  Layers 4, 5, and 6 (Workflow, Output, System Shape) are a co-evolving cluster.
+
+Layer 8 (Validation) runs alongside all other layers, not as a final step.
+It intensifies as more gets defined.
+
+## Co-Development of Workflow, Output, and System Shape
+
+Layers 4, 5, and 6 do not develop cleanly in sequence. Defining a workflow
+reveals what the output needs to be; defining the output reveals what system
+entities are needed; defining the entities constrains what workflows are
+possible. These three layers must be actively co-developed.
+
+Operating rule: when working on any one of L4, L5, or L6, explicitly sketch
+the implications for the other two. Store them as independent entries in the
+knowledge base so each can update without muddying the others.
+
+## The Spiral Protocol
+
+Real definition work does not flow strictly downstream. Ideas about workflows,
+features, or system entities often arrive before the problem, user, or
+product concept is fully defined. This is normal and valuable — a downstream
+idea is a hypothesis about upstream layers.
+
+When a downstream idea arrives before its upstream layers are closed:
+1. Capture the downstream idea as provisional.
+2. Extract the upstream claims it implies. (For this workflow to make sense,
+   the user must be X, doing Y, feeling pain Z.)
+3. Compare those implied claims to current beliefs:
+   - **Match** → the downstream idea reinforces existing upstream definitions.
+   - **Refinement** → upstream gets sharper; update `current-beliefs.md`.
+   - **Contradiction** → surface the tension explicitly; decide whether the
+     downstream idea is wrong or the upstream belief needs revising.
+4. Keep, revise, or park the downstream idea based on the comparison.
+
+The spiral is not chaos — it is disciplined backward inference. Downstream
+thinking is a probe into upstream layers.
 
 ## Readiness Levels
 
@@ -101,20 +166,28 @@ When new artifacts are added, follow this sequence:
 1. Inspect the new source artifacts without rewriting them.
 2. Summarize what each artifact contributes.
 3. Map each artifact to one or more of the 8 MVP definition layers.
-4. Note whether each artifact:
+4. For each artifact, note whether it:
    - strengthens an existing layer
    - duplicates another artifact
    - conflicts with another artifact
    - exposes a new gap
    - belongs in a rabbit hole
-5. Update the control files as needed:
-   - control/index.md
-   - control/layer-readiness.md
-   - control/gap-tracker.md
-   - control/current-beliefs.md
-   - control/next-work.md
-   - control/rabbit-holes.md
-6. Recommend the single highest-leverage next move.
+5. Extract atomic components from the artifact into `control/components/`
+   (concept, model, claim, inventory, gap). Each component is tagged with
+   layer, confidence, source artifact, and date.
+6. Check whether any extracted claims trigger the spiral protocol
+   (i.e. imply upstream claims not yet recorded).
+7. Update the control files as needed:
+   - `control/index.md`
+   - `control/definition-path.md` (mark any questions newly closed)
+   - `control/open-questions.md`
+   - `control/decision-log.md` (add a dated entry)
+   - `control/layer-readiness.md`
+   - `control/gap-tracker.md`
+   - `control/current-beliefs.md`
+   - `control/next-work.md`
+   - `control/rabbit-holes.md`
+8. Recommend the single highest-leverage next move.
 
 Do not create new polished business documents unless asked.
 Prefer understanding, mapping, synthesis, and prioritization first.
